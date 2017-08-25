@@ -1,0 +1,113 @@
+{
+	"variables": [],
+	"info": {
+		"name": "SpaceX launches",
+		"_postman_id": "6cdd1071-2c80-5e9c-ced9-1888acb87a30",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SpaceX past launches",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// The response consists of an array of all past launches",
+							"var allLaunches = JSON.parse(responseBody);",
+							"",
+							"// From the Postman app menu bar, go to View > Show Postman Console to open the console window before running this request or collection to see your logs",
+							"// Loop through the array of launches, log launch data to the Postman console",
+							"for (i = 0; i < allLaunches.length; i++) {",
+							"    ",
+							"    var currentLaunch = allLaunches[i];",
+							"    ",
+							"    console.log(currentLaunch.launch_date_utc);",
+							"    ",
+							"    console.log(currentLaunch.launch_site.site_name);",
+							"    ",
+							"    if (currentLaunch.land_success) {",
+							"        console.log('Success');",
+							"    } else {",
+							"        console.log('Fail');",
+							"    }",
+							"    ",
+							"    if (currentLaunch.details) {",
+							"        console.log(currentLaunch.details);",
+							"    }",
+							"}",
+							"",
+							"// An environment must be active to set an environment variable, so make sure an environment is selected, or create a new environment.",
+							"// Set an environment variable. This allows us to access this data in the next request in this collection.",
+							"postman.setEnvironmentVariable('launchData', JSON.stringify(allLaunches));",
+							"",
+							"// For kunagpal-example",
+							"postman.setNextRequest(null);",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.clearEnvironmentVariable(\"launchData\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://api.spacexdata.com/v1/launches",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Send data to local server",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3000/launches",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "payload",
+							"value": "{{launchData}}",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
