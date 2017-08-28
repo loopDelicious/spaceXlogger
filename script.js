@@ -18,4 +18,4 @@ app.post('/launches', function(req, res) {
 
 var port = 3000;
 app.listen(port);
-console.log('Express started on port %d', port);
+console.log('Express started on port %d ...', port);
