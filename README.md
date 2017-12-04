@@ -1,4 +1,4 @@
-From this blog post about [using Postman to write to your local file system](insert link here), this is an example of pulling data from this [open source REST API for SpaceX data](https://github.com/r-spacex/SpaceX-API), and writing to a local file.
+From this blog post about [using Postman to write to your local file system](http://blog.getpostman.com/2017/09/01/write-to-your-local-file-system-using-a-postman-collection/), this is an example of pulling data from this [open source REST API for SpaceX data](https://github.com/r-spacex/SpaceX-API), and writing to a local file.
 
 ### Install dependencies
 
